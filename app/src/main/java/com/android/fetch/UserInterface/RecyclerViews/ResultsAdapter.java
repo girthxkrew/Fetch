@@ -30,8 +30,11 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        holder.name.setText("Name: " + results.get(position).getName());
+        String name = results.get(position).getName();
+        if(name == null || name.isEmpty()) {
+            name = "swag";
+        }
+        holder.name.setText("Name: " + name);
         holder.id.setText("Id: " + results.get(position).getId());
         holder.listId.setText("ListId: " + results.get(position).getListId());
 

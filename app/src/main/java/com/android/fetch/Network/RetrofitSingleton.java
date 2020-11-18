@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitSingleton {
 
     private static Retrofit instance = null;
-    private static final String BASE_URL = " https://fetch-hiring.s3.amazonaws.com";
+    private static final String BASE_URL = "https://fetch-hiring.s3.amazonaws.com";
 
     public static synchronized Retrofit getInstance() {
         if (instance == null) {

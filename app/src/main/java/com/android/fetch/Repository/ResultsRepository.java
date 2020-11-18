@@ -29,17 +29,13 @@ public class ResultsRepository implements ResultsDataSource {
         }
         return instance;
     }
-
+    
     @Override
     public Observable<List<Results>> getResults() {
-        return roomDataSource.getResults().flatMap(results -> {
-            if(results.isEmpty()) {
-                return networkDataSource.getResults().doOnNext(results1 -> saveResults(results1));
-            }
-            else {
-                return Observable.just(results);
-            }
-        });
+        return networkDataSource.getResults()
+                .doOnNext(results -> roomDataSource.saveResults(results))
+                .publish(results -> Observable.merge(results, roomDataSource.getResults()))
+                .onErrorResumeNext(throwable -> roomDataSource.getResults());
     }
 
     @Override
